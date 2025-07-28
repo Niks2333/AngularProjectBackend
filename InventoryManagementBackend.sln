@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 14 for Web
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementBackend", "InventoryManagementBackend\InventoryManagementBackend.csproj", "{0AEA50E1-36CA-4095-B7AA-3C78AF453B93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementLibrary", "..\..\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\InventoryManagementLibrary.csproj", "{E8B7C935-6D03-4FCB-AFD2-A10D7B4A6956}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AEA50E1-36CA-4095-B7AA-3C78AF453B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AEA50E1-36CA-4095-B7AA-3C78AF453B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AEA50E1-36CA-4095-B7AA-3C78AF453B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AEA50E1-36CA-4095-B7AA-3C78AF453B93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B7C935-6D03-4FCB-AFD2-A10D7B4A6956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B7C935-6D03-4FCB-AFD2-A10D7B4A6956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B7C935-6D03-4FCB-AFD2-A10D7B4A6956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B7C935-6D03-4FCB-AFD2-A10D7B4A6956}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
