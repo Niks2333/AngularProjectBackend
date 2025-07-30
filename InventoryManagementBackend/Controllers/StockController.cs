@@ -14,42 +14,24 @@ namespace InventoryManagementBackend.Controllers
     public class StockController : ApiController
     {
         private readonly StoreStockRepository repository = new StoreStockRepository();
-
-        [HttpGet]
+        [HttpPost]
         [Route("bystore")]
-        public IHttpActionResult GetStockByStore(
-            string storeName,
-            string search = null,
-            string category = null,
-            int page = 1,
-            int pageSize = 5,
-            string sortColumn = "ProductName",
-            string sortOrder = "ASC")
+        public IHttpActionResult GetStockByStore([FromBody] StoreProductViewModel model)
         {
             try
             {
-                var products = repository.GetStoreProducts(storeName, search, category, page, pageSize, sortColumn, sortOrder);
-                var allCategories = repository.GetStoreProducts(storeName)
+                var products = repository.GetStoreProducts(model.StoreName, model.Search, model.SelectedCategory, model.Page, model.PageSize, model.SortColumn, model.SortOrder);
+                var allCategories = repository.GetStoreProducts(model.StoreName)
                                               .Select(p => p.CategoryName)
                                               .Distinct()
                                               .ToList();
-                var totalProductsCount = repository.GetStoreProducts(storeName, search, category, 1, int.MaxValue).Count;
+                var totalProductsCount = repository.GetStoreProducts(model.StoreName, model.Search, model.SelectedCategory, 1, int.MaxValue).Count;
 
-                var viewModel = new StoreProductViewModel
-                {
-                    Products = products,
-                    Categories = allCategories,
-                    SelectedCategory = category,
-                    Search = search,
-                    StoreName = storeName,
-                    Page = page,
-                    PageSize = pageSize,
-                    SortColumn = sortColumn,
-                    SortOrder = sortOrder,
-                    TotalCount = totalProductsCount
-                };
+                model.Products = products;
+                model.Categories = allCategories;
+                model.TotalCount = totalProductsCount;
 
-                return Ok(viewModel);
+                return Ok(model);
             }
             catch (Exception ex)
             {
