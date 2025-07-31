@@ -44,9 +44,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="InventoryManagementLibrary">
-      <HintPath>..\..\..\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -223,7 +220,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\InventoryManagementLibrary.csproj">
+      <Project>{e8b7c935-6d03-4fcb-afd2-a10d7b4a6956}</Project>
+      <Name>InventoryManagementLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

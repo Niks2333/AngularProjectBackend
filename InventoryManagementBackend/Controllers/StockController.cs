@@ -20,12 +20,28 @@ namespace InventoryManagementBackend.Controllers
         {
             try
             {
-                var products = repository.GetStoreProducts(model.StoreName, model.Search, model.SelectedCategory, model.Page, model.PageSize, model.SortColumn, model.SortOrder);
+                var products = repository.GetStoreProducts(
+                    model.StoreName,
+                    model.Search,
+                    model.SelectedCategories,
+                    model.Page,
+                    model.PageSize,
+                    model.SortColumn,
+                    model.SortOrder
+                );
+
                 var allCategories = repository.GetStoreProducts(model.StoreName)
                                               .Select(p => p.CategoryName)
                                               .Distinct()
                                               .ToList();
-                var totalProductsCount = repository.GetStoreProducts(model.StoreName, model.Search, model.SelectedCategory, 1, int.MaxValue).Count;
+
+                var totalProductsCount = repository.GetStoreProducts(
+                    model.StoreName,
+                    model.Search,
+                    model.SelectedCategories,
+                    1,
+                    int.MaxValue
+                ).Count;
 
                 model.Products = products;
                 model.Categories = allCategories;
@@ -39,5 +55,6 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
+
     }
 }
