@@ -17,7 +17,8 @@ namespace InventoryManagementBackend.Controllers
         public IHttpActionResult GetStores()
         {
             try
-            {
+            {   
+
                 var repo = new StoreRepository();
                 var stores = repo.GetStores();
                 return Ok(stores);
