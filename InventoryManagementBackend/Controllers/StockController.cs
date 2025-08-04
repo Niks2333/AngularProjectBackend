@@ -73,7 +73,7 @@ namespace InventoryManagementBackend.Controllers
             {
                 var allProducts = repository.GetAllProductNames();
                 var addedProducts = repository.GetAddedProductNamesForStore(storeName);
-                var availableProducts = allProducts.Except(addedProducts).ToList();
+                var availableProducts = allProducts.Except(addedProducts, StringComparer.OrdinalIgnoreCase).ToList();
 
                 var model = new WebAddStockViewModel
                 {
