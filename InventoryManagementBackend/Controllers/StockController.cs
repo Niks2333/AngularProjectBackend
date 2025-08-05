@@ -96,7 +96,7 @@ namespace InventoryManagementBackend.Controllers
         {
             try
             {
-                var httpRequest =HttpContext.Current.Request;
+                var httpRequest = HttpContext.Current.Request;
 
                 var storeName = httpRequest["StoreName"];
                 var productName = httpRequest["ProductName"];
@@ -118,7 +118,7 @@ namespace InventoryManagementBackend.Controllers
                     productName,
                     storePrice,
                     stock,
-                    "System", 
+                    "System",
                     fileName,
                     out errorMessage
                 );
@@ -131,12 +131,122 @@ namespace InventoryManagementBackend.Controllers
                 return Content(HttpStatusCode.InternalServerError, new
                 {
                     success = false,
-                    message = "Exception: " + ex.Message, 
+                    message = "Exception: " + ex.Message,
                     stackTrace = ex.StackTrace
                 });
             }
 
         }
 
+        [HttpGet]
+        [Route("edit-form-data/{id}")]
+        public IHttpActionResult GetEditStockFormData(int id)
+        {
+            try
+            {
+                var data = repository.GetStockById(id);
+
+                var model = new WebEditStockViewModel
+                {
+                    StoreProductId = data.StoreProductId,
+                    StorePrice = data.StorePrice,
+                    Stock = data.Stock,
+                    ImagePath = data.ImagePath,
+                    StoreName = data.StoreName,
+                    ProductName = data.ProductName
+                };
+
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public IHttpActionResult UpdateStock()
+        {
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+                var form = httpRequest.Form;
+
+                var model = new WebEditStockViewModel
+                {
+                    StoreProductId = Convert.ToInt32(form["StoreProductId"]),
+                    StorePrice = Convert.ToDecimal(form["StorePrice"]),
+                    Stock = Convert.ToInt32(form["Stock"]),
+                    ImagePath = form["ImagePath"],
+                    ProductName = form["ProductName"],
+                    StoreName = form["StoreName"]
+                };
+
+                var file = httpRequest.Files["ImageFile"];
+                string fileName = null;
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(file.FileName);
+                    var savePath = HttpContext.Current.Server.MapPath("~/Content/images/" + fileName);
+                    file.SaveAs(savePath);
+                }
+
+                string error;
+                var success = repository.UpdateStoreProduct(
+                    model.StoreProductId,
+                    model.StorePrice,
+                    model.Stock,
+                    "admin",
+                    fileName,
+                    out error
+                );
+
+                return Ok(new { success, message = error });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public IHttpActionResult DeleteStock(int id)
+        {
+            try
+            {
+                string modifiedBy = User?.Identity?.Name ?? "System";
+
+                string error;
+                bool success = repository.DeleteStoreProduct(id, modifiedBy, out error);
+
+                if (success)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "Deleted successfully"
+                    });
+                }
+                else
+                {
+                    return Content(HttpStatusCode.BadRequest, new
+                    {
+                        success = false,
+                        message = error
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+
+                return InternalServerError(new Exception("Unexpected error while deleting."));
+            }
+
+
+        }
     }
 }
