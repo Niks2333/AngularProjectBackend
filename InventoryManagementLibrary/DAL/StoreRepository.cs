@@ -197,5 +197,72 @@ namespace InventoryManagementLibrary.DAL
                 return false;
             }
         }
+
+        public List<StoreTypeModel> GetActiveStoreTypes()
+        {
+            var storeTypes = new List<StoreTypeModel>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand("StoreTypesGetActive", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            storeTypes.Add(new StoreTypeModel
+                            {
+                                StoreTypeId = Convert.ToInt32(reader["StoreTypeId"]),
+                                StoreTypeName = reader["StoreTypeName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+            }
+
+            return storeTypes;
+        }
+        public List<ProductModel> GetAllProducts2()
+        {
+            var products = new List<ProductModel>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("ProductsGetAllNames2", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            products.Add(new ProductModel
+                            {
+                                ProductId = Convert.ToInt32(reader["ProductId"]),
+                                ProductName = reader["ProductName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+            }
+
+            return products;
+        }
+
+
     }
 }

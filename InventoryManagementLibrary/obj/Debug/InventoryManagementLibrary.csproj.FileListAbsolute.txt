@@ -1,1 +1,42 @@
-D:\Angular\InventoryManagementBackend\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.csprojResolveAssemblyReference.cache
+D:\Nikhilmvc\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.csprojResolveAssemblyReference.cache
+D:\Nikhilmvc\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.dll
+D:\Nikhilmvc\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.pdb
+D:\Nikhilmvc\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.dll
+D:\Nikhilmvc\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.pdb
+D:\Nikhilmvc\InventoryMangement\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.dll
+D:\Nikhilmvc\InventoryMangement\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.pdb
+D:\Nikhilmvc\InventoryMangement\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.csprojResolveAssemblyReference.cache
+D:\Nikhilmvc\InventoryMangement\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.dll
+D:\Nikhilmvc\InventoryMangement\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.pdb
+C:\Users\Administrator\Downloads\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.dll
+C:\Users\Administrator\Downloads\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.pdb
+C:\Users\Administrator\Downloads\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Downloads\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.dll
+C:\Users\Administrator\Downloads\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.pdb
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.dll
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.pdb
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Logging.dll
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Logging.xml
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.csprojResolveAssemblyReference.cache
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.dll
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.pdb
+D:\Nikhilmvc\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\System.ComponentModel.Annotations.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\InventoryManagementLibrary.pdb
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Logging.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\System.ComponentModel.Annotations.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Logging.xml
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.dll
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.pdb
+D:\Final wih ADo\InventoryMangement 2\InventoryMangement 2\InventoryMangement\InventoryManagementLibrary\obj\Debug\InventoryManagementLibrary.csprojResolveAssemblyReference.cache
