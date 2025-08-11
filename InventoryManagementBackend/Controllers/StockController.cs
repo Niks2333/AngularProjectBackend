@@ -2,6 +2,7 @@
 using InventoryManagementLibrary.DAL;
 using InventoryManagementLibrary.Helpers;
 using InventoryManagementLibrary.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -98,10 +99,9 @@ namespace InventoryManagementBackend.Controllers
             {
                 var httpRequest = HttpContext.Current.Request;
 
-                var storeName = httpRequest["StoreName"];
-                var productName = httpRequest["ProductName"];
-                var storePrice = Convert.ToDecimal(httpRequest["StorePrice"]);
-                var stock = Convert.ToInt32(httpRequest["Stock"]);
+                var json = httpRequest["Data"];
+                var model = JsonConvert.DeserializeObject<AddStockRequestModel>(json);
+
                 var uploadedFile = httpRequest.Files["ImageFile"];
                 string fileName = null;
 
@@ -113,30 +113,18 @@ namespace InventoryManagementBackend.Controllers
                 }
 
                 string errorMessage;
-                var result = stockInsertRepository.AddStoreProduct(
-                    storeName,
-                    productName,
-                    storePrice,
-                    stock,
-                    "System",
-                    fileName,
-                    out errorMessage
-                );
+                var result = stockInsertRepository.AddStoreProduct(model.StoreName, model.ProductName,model.StorePrice,model.Stock,"System",fileName,out errorMessage);
 
                 return Ok(new { success = result, message = errorMessage });
             }
             catch (Exception ex)
             {
                 Logger.LogException(ex.Message, ex.StackTrace, 0);
-                return Content(HttpStatusCode.InternalServerError, new
-                {
-                    success = false,
-                    message = "Exception: " + ex.Message,
-                    stackTrace = ex.StackTrace
-                });
+                return InternalServerError(ex);
             }
-
         }
+
+
 
         [HttpGet]
         [Route("edit-form-data/{id}")]
@@ -163,7 +151,6 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
-
         [HttpPost]
         [Route("update")]
         public IHttpActionResult UpdateStock()
@@ -171,17 +158,11 @@ namespace InventoryManagementBackend.Controllers
             try
             {
                 var httpRequest = HttpContext.Current.Request;
-                var form = httpRequest.Form;
 
-                var model = new WebEditStockViewModel
-                {
-                    StoreProductId = Convert.ToInt32(form["StoreProductId"]),
-                    StorePrice = Convert.ToDecimal(form["StorePrice"]),
-                    Stock = Convert.ToInt32(form["Stock"]),
-                    ImagePath = form["ImagePath"],
-                    ProductName = form["ProductName"],
-                    StoreName = form["StoreName"]
-                };
+           
+                var json = httpRequest["model"];
+
+                var model = JsonConvert.DeserializeObject<WebEditStockViewModel>(json);
 
                 var file = httpRequest.Files["ImageFile"];
                 string fileName = null;
@@ -194,19 +175,13 @@ namespace InventoryManagementBackend.Controllers
                 }
 
                 string error;
-                var success = repository.UpdateStoreProduct(
-                    model.StoreProductId,
-                    model.StorePrice,
-                    model.Stock,
-                    "admin",
-                    fileName,
-                    out error
-                );
+                var success = repository.UpdateStoreProduct( model.StoreProductId,model.StorePrice, model.Stock,"admin", fileName, out error);
 
                 return Ok(new { success, message = error });
             }
             catch (Exception ex)
             {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
                 return InternalServerError(ex);
             }
         }

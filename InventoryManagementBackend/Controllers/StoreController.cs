@@ -1,10 +1,15 @@
 ﻿using InventoryManagementLibrary.DAL;
 using InventoryManagementLibrary.Helpers;
+using InventoryManagementLibrary.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace InventoryManagementBackend.Controllers
@@ -65,5 +70,79 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpPost]
+        [Route("add-with-products")]
+        public IHttpActionResult AddStoreWithProducts()
+        {
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+
+               
+                var modelJson = httpRequest.Form["model"];
+                if (string.IsNullOrEmpty(modelJson))
+                    return BadRequest("Model data is required.");
+
+                var model = JsonConvert.DeserializeObject<AddStoreWithProductsModel>(modelJson);
+                if (model == null || model.Products == null || !model.Products.Any())
+                    return BadRequest("Invalid store or product data.");
+
+                
+                for (int i = 0; i < model.Products.Count; i++)
+                {
+                    var fileKey = $"productImage_{i}";
+                    var file = httpRequest.Files[fileKey];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+
+                        var fileName = Path.GetFileName(file.FileName);
+                        var savePath = HttpContext.Current.Server.MapPath("~/Content/images/");
+                        if (!Directory.Exists(savePath))
+                            Directory.CreateDirectory(savePath);
+
+                        var fullPath = Path.Combine(savePath, fileName);
+                        file.SaveAs(fullPath);
+
+
+                        model.Products[i].ImagePath = fileName;
+                    }
+                    else
+                    {
+                        model.Products[i].ImagePath = null;
+                    }
+                }
+
+               
+                string errorMessage;
+                bool result = repo.AddStoreWithProducts(
+                    model.StoreName,
+                    model.StoreTypeId,
+                    model.CreatedBy,
+                    null, 
+                    model.Products.Select(p => new ProductInputModel
+                    {
+                        ProductId = p.ProductId,
+                        StorePrice = p.StorePrice,
+                        Stock = p.Stock,
+                        ImagePath = p.ImagePath
+                    }).ToList(),
+                    out errorMessage
+                );
+
+                if (!result)
+                    return Content(HttpStatusCode.BadRequest, new { message = errorMessage });
+
+                return Ok(new { message = "Store and products added successfully." });
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+                return InternalServerError(ex);
+            }
+        }
     }
+
 }
+
