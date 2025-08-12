@@ -27,28 +27,14 @@ namespace InventoryManagementBackend.Controllers
         {
             try
             {
-                var products = repository.GetStoreProducts(
-                    model.StoreName,
-                    model.Search,
-                    model.SelectedCategories,
-                    model.Page,
-                    model.PageSize,
-                    model.SortColumn,
-                    model.SortOrder
-                );
+                var products = repository.GetStoreProducts(model.StoreName,model.Search,model.SelectedCategories,model.Page,model.PageSize,model.SortColumn,model.SortOrder);
 
                 var allCategories = repository.GetStoreProducts(model.StoreName)
                                               .Select(p => p.CategoryName)
                                               .Distinct()
                                               .ToList();
 
-                var totalProductsCount = repository.GetStoreProducts(
-                    model.StoreName,
-                    model.Search,
-                    model.SelectedCategories,
-                    1,
-                    int.MaxValue
-                ).Count;
+                var totalProductsCount = repository.GetStoreProducts( model.StoreName,model.Search,model.SelectedCategories,1,int.MaxValue).Count;
 
                 model.Products = products;
                 model.Categories = allCategories;
@@ -91,9 +77,10 @@ namespace InventoryManagementBackend.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("add")]
-        public async Task<IHttpActionResult> AddStock()
+        public  IHttpActionResult AddStock()
         {
             try
             {
@@ -151,6 +138,7 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
+
         [HttpPost]
         [Route("update")]
         public IHttpActionResult UpdateStock()
