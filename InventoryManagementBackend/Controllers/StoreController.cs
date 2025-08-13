@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -19,7 +18,6 @@ namespace InventoryManagementBackend.Controllers
     {
         private readonly StoreRepository repository = new StoreRepository();
 
-       
         [HttpGet]
         [Route("list")]
         public IHttpActionResult GetStores()
@@ -36,8 +34,6 @@ namespace InventoryManagementBackend.Controllers
             }
         }
 
-
-      
         [HttpGet]
         [Route("productlist")]
         public IHttpActionResult GetAllProducts()
@@ -53,7 +49,6 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
-
 
         [HttpGet]
         [Route("storetypes")]
@@ -79,7 +74,7 @@ namespace InventoryManagementBackend.Controllers
             {
                 var httpRequest = HttpContext.Current.Request;
 
-               
+          
                 var modelJson = httpRequest.Form["model"];
                 if (string.IsNullOrEmpty(modelJson))
                     return BadRequest("Model data is required.");
@@ -88,7 +83,7 @@ namespace InventoryManagementBackend.Controllers
                 if (model == null || model.Products == null || !model.Products.Any())
                     return BadRequest("Invalid store or product data.");
 
-                
+             
                 for (int i = 0; i < model.Products.Count; i++)
                 {
                     var fileKey = $"productImage_{i}";
@@ -96,7 +91,6 @@ namespace InventoryManagementBackend.Controllers
 
                     if (file != null && file.ContentLength > 0)
                     {
-
                         var fileName = Path.GetFileName(file.FileName);
                         var savePath = HttpContext.Current.Server.MapPath("~/Content/images/");
                         if (!Directory.Exists(savePath))
@@ -104,7 +98,6 @@ namespace InventoryManagementBackend.Controllers
 
                         var fullPath = Path.Combine(savePath, fileName);
                         file.SaveAs(fullPath);
-
 
                         model.Products[i].ImagePath = fileName;
                     }
@@ -147,18 +140,23 @@ namespace InventoryManagementBackend.Controllers
         [Route("get-with-products/{storeName}")]
         public IHttpActionResult GetStoreWithProducts(string storeName)
         {
-           
-            if (string.IsNullOrEmpty(storeName))
-                return BadRequest("Store name is required.");
+            try
+            {
+                if (string.IsNullOrEmpty(storeName))
+                    return BadRequest("Store name is required.");
 
-            var result = repository.GetStoreWithProducts(storeName);
+                var result = repository.GetStoreWithProducts(storeName);
+                if (result == null)
+                    return NotFound();
 
-            if (result == null)
-                return NotFound();
-
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+                return InternalServerError(ex);
+            }
         }
-
 
         [HttpPost]
         [Route("update-with-products")]
@@ -168,7 +166,7 @@ namespace InventoryManagementBackend.Controllers
             {
                 var httpRequest = HttpContext.Current.Request;
 
-              
+               
                 var modelJson = httpRequest.Form["model"];
                 if (string.IsNullOrEmpty(modelJson))
                     return BadRequest("Model data is required.");
@@ -177,7 +175,7 @@ namespace InventoryManagementBackend.Controllers
                 if (model == null || model.Products == null)
                     return BadRequest("Invalid store or product data.");
 
-           
+               
                 for (int i = 0; i < model.Products.Count; i++)
                 {
                     var fileKey = $"productImage_{i}";
@@ -197,13 +195,17 @@ namespace InventoryManagementBackend.Controllers
                     }
                     else
                     {
-                   
+                        
                         model.Products[i].ImagePath = model.Products[i].ImagePath ?? "";
                     }
                 }
 
+               
                 string errorMessage;
-                bool result = repository.UpdateStoreWithProducts( model.StoreName,model.StoreTypeId,model.CreatedBy,
+                bool result = repository.UpdateStoreWithProducts(
+                    model.StoreName,
+                    model.StoreTypeId,
+                    model.CreatedBy,
                     model.Products.Select(p => new ProductInputModel
                     {
                         ProductId = p.ProductId,
@@ -225,8 +227,5 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
-
     }
-
 }
-

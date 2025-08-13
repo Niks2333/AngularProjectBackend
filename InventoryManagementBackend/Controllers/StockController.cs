@@ -23,17 +23,12 @@ namespace InventoryManagementBackend.Controllers
 
         [HttpPost]
         [Route("bystore")]
-        public IHttpActionResult GetStockByStore([FromBody] StoreProductViewModel model)
+        public IHttpActionResult GetStockByStore(StoreProductViewModel model)
         {
             try
             {
-                var products = repository.GetStoreProducts(model.StoreName,model.Search,model.SelectedCategories,model.Page,model.PageSize,model.SortColumn,model.SortOrder);
-
-                var allCategories = repository.GetStoreProducts(model.StoreName)
-                                              .Select(p => p.CategoryName)
-                                              .Distinct()
-                                              .ToList();
-
+                var products = repository.GetStoreProducts(model.StoreName, model.Search, model.SelectedCategories, model.Page, model.PageSize, model.SortColumn, model.SortOrder);
+                var allCategories = repository.GetStoreProducts(model.StoreName).Select(p => p.CategoryName).Distinct().ToList();
                 var totalProductsCount = repository.GetStoreProducts( model.StoreName,model.Search,model.SelectedCategories,1,int.MaxValue).Count;
 
                 model.Products = products;
@@ -48,9 +43,6 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
-
-
-
 
         [HttpGet]
         [Route("add-form-data")]
@@ -76,7 +68,6 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
-
 
         [HttpPost]
         [Route("add")]
@@ -110,8 +101,6 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
-
-
 
         [HttpGet]
         [Route("edit-form-data/{id}")]

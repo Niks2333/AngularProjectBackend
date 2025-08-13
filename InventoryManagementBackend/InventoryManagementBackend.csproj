@@ -164,6 +164,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Middleware\JwtAuthorizeAttribute.cs" />
     <Compile Include="Models\WebAddStockViewModel.cs" />
     <Compile Include="Models\WebEditStockViewModel.cs" />
     <Compile Include="Models\WebStoreModel.cs" />
