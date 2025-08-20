@@ -1,6 +1,7 @@
 ﻿using InventoryManagementLibrary.DAL;
 using InventoryManagementLibrary.Helpers;
 using InventoryManagementLibrary.Models;
+using InventoryMangement.Middleware;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Web;
 using System.Web.Http;
 
 namespace InventoryManagementBackend.Controllers
-{
+{   [JwtAuthorize]
     [RoutePrefix("api/store")]
     public class StoreController : ApiController
     {

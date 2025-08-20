@@ -1,44 +1,43 @@
-﻿using System.Web.Mvc;
-using System;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Web;
+using System.Web.Http;
+using System.Web.Http.Controllers;
 using InventoryManagementLibrary.Helpers;
 
 namespace InventoryMangement.Middleware
 {
     public class JwtAuthorizeAttribute : AuthorizeAttribute
     {
-        private static readonly string SecretKey = System.Configuration.ConfigurationManager.AppSettings["JwtSecretKey"];
-
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        protected override bool IsAuthorized(HttpActionContext actionContext)
         {
-            var request = filterContext.HttpContext.Request;
+            var request = actionContext.Request;
+            var authHeader = request.Headers.Authorization;
 
-            var authToken = request.Cookies["AuthToken"]?.Value;
+            if (authHeader == null || authHeader.Scheme != "Bearer")
+                return false;
 
-            if (string.IsNullOrEmpty(authToken))
-            {
-                HandleUnauthorizedRequest(filterContext);
-
-                return;
-            }
+            var token = authHeader.Parameter;
 
             try
             {
-                ClaimsPrincipal principal = JwtManager.GetPrincipal(authToken);
-
+                ClaimsPrincipal principal = JwtManager.GetPrincipal(token);
                 HttpContext.Current.User = principal;
+                return true;
             }
-            catch (Exception)
+            catch
             {
-                HandleUnauthorizedRequest(filterContext);
+                return false;
             }
         }
 
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
         {
-            
-            filterContext.Result = new RedirectResult("/Account/Login");
+            actionContext.Response = actionContext.Request
+                .CreateResponse(HttpStatusCode.Unauthorized,
+                    new { message = "Unauthorized - Invalid or missing token" });
         }
     }
 }
