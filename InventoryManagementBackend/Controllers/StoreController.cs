@@ -13,7 +13,7 @@ using System.Web;
 using System.Web.Http;
 
 namespace InventoryManagementBackend.Controllers
-{   //[JwtAuthorize]
+{   [JwtAuthorize]
     [RoutePrefix("api/store")]
     public class StoreController : ApiController
     {
