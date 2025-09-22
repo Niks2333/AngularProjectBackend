@@ -2,6 +2,7 @@
 using InventoryManagementLibrary.Helpers;
 using InventoryManagementLibrary.DAL;
 using InventoryManagementLibrary.Models;
+using InventoryMangement.Middleware;
 
 namespace InventoryManagementBackend.Controllers
 {
@@ -9,7 +10,6 @@ namespace InventoryManagementBackend.Controllers
     public class AccountController : ApiController
     {
         private readonly UserRepository repository = new UserRepository();
-
 
         [HttpPost]
         [Route("login")]
@@ -22,15 +22,30 @@ namespace InventoryManagementBackend.Controllers
 
             if (!isValid)
                 return Unauthorized();
+            var roles = repository.GetUserRoles(user.Username);
 
-
-            string token = JwtManager.GenerateToken(user.Username);
+            string token = JwtManager.GenerateToken(user.Username,roles);
 
             return Ok(new
             {
                 token = token,
                 Username = user.Username,
-                Message = "Login successful"
+                Message = "Login successful",
+                Roles = roles
+            });
+        }
+
+        [HttpPost]
+        [Route("ValidateToken")]
+        [JwtAuthorize]
+
+        public IHttpActionResult ValidateToken()
+        {
+           
+            return Ok(new
+            {
+                IsValid = true,
+                Message = "Token is valid"
             });
         }
 

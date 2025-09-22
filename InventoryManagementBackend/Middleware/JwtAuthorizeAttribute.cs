@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -24,8 +25,22 @@ namespace InventoryMangement.Middleware
             try
             {
                 ClaimsPrincipal principal = JwtManager.GetPrincipal(token);
+
+                if (principal == null || !principal.Identity.IsAuthenticated)
+                    return false;
+
                 HttpContext.Current.User = principal;
-                return true;
+
+          
+                if (!string.IsNullOrEmpty(Roles))
+                {
+                    var allowedRoles = Roles.Split(',').Select(r => r.Trim());
+
+                   
+                    return allowedRoles.Any(role => principal.IsInRole(role));
+                }
+
+                return true; 
             }
             catch
             {

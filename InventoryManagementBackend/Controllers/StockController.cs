@@ -16,7 +16,7 @@ using System.Web.Http;
 
 namespace InventoryManagementBackend.Controllers
 {
-    [JwtAuthorize]
+    [JwtAuthorize(Roles = "Admin,Manager")] 
     [RoutePrefix("api/stock")]
     public class StockController : ApiController
     {
@@ -29,9 +29,9 @@ namespace InventoryManagementBackend.Controllers
         {
             try
             {
-                var products = repository.GetStoreProducts(model.StoreName, model.Search, model.SelectedCategories, model.Page, model.PageSize, model.SortColumn, model.SortOrder);
-                var allCategories = repository.GetStoreProducts(model.StoreName).Select(p => p.CategoryName).Distinct().ToList();
-                var totalProductsCount = repository.GetStoreProducts( model.StoreName,model.Search,model.SelectedCategories,1,int.MaxValue).Count;
+                var products = repository.GetStoreProducts(model);
+                var allCategories = repository.GetStoreCategories(model);
+                var totalProductsCount = repository.GetStoreProductsCount(model);
 
                 model.Products = products;
                 model.Categories = allCategories;
@@ -41,10 +41,11 @@ namespace InventoryManagementBackend.Controllers
             }
             catch (Exception ex)
             {
-                Logger.LogException(ex.Message, ex.StackTrace, 0);
                 return InternalServerError(ex);
             }
         }
+
+
 
         [HttpGet]
         [Route("add-form-data")]
@@ -199,8 +200,6 @@ namespace InventoryManagementBackend.Controllers
 
                 return InternalServerError(new Exception("Unexpected error while deleting."));
             }
-
-
         }
     }
 }

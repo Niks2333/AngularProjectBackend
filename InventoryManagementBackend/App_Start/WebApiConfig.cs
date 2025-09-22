@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-
 namespace InventoryManagementBackend
 {
     public static class WebApiConfig

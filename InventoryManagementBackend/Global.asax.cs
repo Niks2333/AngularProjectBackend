@@ -24,8 +24,13 @@ namespace InventoryManagementBackend
         {
 
 
-            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            var origin = HttpContext.Current.Request.Headers["Origin"];
 
+            // Allow only Angular dev server
+            if (origin == "http://localhost:4200")
+            {
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", origin);
+            }
             if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
 
             {

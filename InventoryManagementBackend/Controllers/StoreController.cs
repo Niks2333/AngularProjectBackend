@@ -13,7 +13,8 @@ using System.Web;
 using System.Web.Http;
 
 namespace InventoryManagementBackend.Controllers
-{   [JwtAuthorize]
+{
+    [JwtAuthorize]
     [RoutePrefix("api/store")]
     public class StoreController : ApiController
     {
@@ -228,5 +229,50 @@ namespace InventoryManagementBackend.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpDelete]
+        [Route("delete/{storeName}")]
+        public IHttpActionResult DeleteStore(string storeName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(storeName))
+                {
+                    return BadRequest("Store Name is required");
+                }
+
+                bool result = repository.DeleteStore(storeName);
+
+                if (!result)
+                {
+                    return Content(HttpStatusCode.NotFound, new { success = false, message = "Store not found" });
+                }
+
+          
+                return Ok(new { success = true, message = "Store deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("exists")]
+        public IHttpActionResult CheckStoreExists(string storeName)
+        {
+            try
+            {
+                bool exists = repository.CheckStoreExists(storeName);
+                return Ok(exists); 
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex.Message, ex.StackTrace, 0);
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }
